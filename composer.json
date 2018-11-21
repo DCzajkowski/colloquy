@@ -1,0 +1,28 @@
+{
+    "name": "dczajkowski/colloquy",
+    "description": "A framework-agnostic package for managing persistent conversation contexts.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dariusz Czajkowski",
+            "email": "dare.czajkowski@gmail.com",
+            "homepage": "https://dczajkowski.com"
+        },
+        {
+            "name": "Grzegorz Tłuszcz",
+            "homepage": "https://github.com/gtluszcz"
+        },
+        {
+            "name": "Aleksander Kuźma"
+        },
+        {
+            "name": "Karol Piwnicki"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Colloquy\\": "src/"
+        }
+    }
+}
