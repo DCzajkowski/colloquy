@@ -29,11 +29,6 @@ class Colloquy
         return new ColloquyContext($identifier, $this);
     }
 
-    public function get(string $identifier): ColloquyContext
-    {
-        return new ColloquyContext($identifier, $this);
-    }
-
     public function end(string $identifier): void
     {
         $this->driver->remove($identifier);
