@@ -6,12 +6,12 @@ class ConsoleDriver implements DriverInterface
 {
     public function get(string $id, string $key)
     {
-        echo 'get(', $key, ')' . PHP_EOL;
+        echo 'get(', $id, ', ', $key, ')' . PHP_EOL;
     }
 
     public function set(string $id, string $key, $value): void
     {
-        echo 'set(', $key, ', ', $value, ')' . PHP_EOL;
+        echo 'set(', $id, ', ', $key, ', ', $value, ')' . PHP_EOL;
     }
 
     public function create(string $id): void
@@ -27,5 +27,7 @@ class ConsoleDriver implements DriverInterface
     public function exists(string $id): bool
     {
         echo 'exists(', $id, ')' . PHP_EOL;
+
+        return true;
     }
 }
