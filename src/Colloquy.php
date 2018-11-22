@@ -3,6 +3,7 @@
 namespace Colloquy;
 
 use Colloquy\Drivers\DriverInterface;
+use Colloquy\Exceptions\ContextAlreadyExistsException;
 
 class Colloquy
 {
@@ -15,6 +16,10 @@ class Colloquy
 
     public function begin(string $identifier): ColloquyContext
     {
+        if ($this->driver->exists($identifier)) {
+            throw new ContextAlreadyExistsException;
+        }
+
         $this->driver->create($identifier);
 
         return new ColloquyContext($identifier, $this);

@@ -5,6 +5,7 @@ namespace Tests;
 use Colloquy\Colloquy;
 use Colloquy\ColloquyContext;
 use Tests\Drivers\FakeDriver;
+use Colloquy\Exceptions\ContextAlreadyExistsException;
 
 class ColloquyTest extends TestCase
 {
@@ -18,6 +19,18 @@ class ColloquyTest extends TestCase
         $this->assertFalse($driver->exists('non-existent-identifier'));
         $this->assertInstanceOf(ColloquyContext::class, $context);
         $this->assertEquals($identifier, $context->getIdentifier());
+    }
+
+    public function testBeginThrowsAnExceptionIfContextWithSpecifiedIdentifierAlreadyExists()
+    {
+        $this->expectException(ContextAlreadyExistsException::class);
+
+        $driver = new FakeDriver;
+        $driver->create($identifier = 'identifier');
+
+        $wrapper = new Colloquy($driver);
+
+        $wrapper->begin($identifier);
     }
 
     public function testContextMethodCreatesANewContextWhenItDoesNotExistAndReturnsIt()
