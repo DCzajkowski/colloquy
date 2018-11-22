@@ -35,4 +35,9 @@ class ColloquyContext
     {
         $this->wrapper->getDriver()->set($this->identifier, $key, $value);
     }
+
+    public function getIdentifier(): string
+    {
+        return $this->identifier;
+    }
 }
