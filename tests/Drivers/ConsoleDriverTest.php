@@ -2,12 +2,12 @@
 
 namespace Tests\Drivers;
 
-use Colloquy\Drivers\ConsoleDriver;
 use Tests\TestCase;
+use Colloquy\Drivers\ConsoleDriver;
 
 class ConsoleDriverTest extends TestCase
 {
-    /** @var \Colloquy\Drivers\DriverInterface */
+    /** @var \Colloquy\Drivers\ConsoleDriver */
     private $driver;
 
     public function setUp()
