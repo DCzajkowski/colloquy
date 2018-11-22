@@ -1,4 +1,4 @@
-# Colloquy
+# ⚠️ WIP ⚠️ - Colloquy
 A framework-agnostic package for managing persistent conversation contexts.
 
 # Installation
