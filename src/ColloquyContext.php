@@ -6,7 +6,10 @@ use Colloquy\Exceptions\NoKeyProvidedException;
 
 class ColloquyContext
 {
+    /** @type string */
     protected $identifier;
+
+    /** @type Colloquy */
     protected $wrapper;
 
     public function __construct(string $identifier, Colloquy $wrapper)

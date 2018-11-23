@@ -9,7 +9,11 @@ use Colloquy\Exceptions\UserDefinedContextNotFoundException;
 class Colloquy
 {
     public const PREFIX = 'Colloquy';
+
+    /** @type ColloquyBinding[] */
     protected static $bindings = [];
+
+    /** @type DriverInterface */
     protected $driver;
 
     public function __construct(DriverInterface $driver)
