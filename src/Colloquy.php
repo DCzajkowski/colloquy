@@ -54,7 +54,7 @@ class Colloquy
     public static function createContextFromBinding(string $contextName, object $object)
     {
         if (!Colloquy::doesContextBindingExist($contextName)) {
-            throw new UserDefinedContextNotFoundException('Context ' . $contextName . ' not found in user-defined bindings. Have you called Colloquy::bind?');
+            throw new UserDefinedContextNotFoundException($contextName);
         }
 
         $binding = self::$bindings[$contextName];
@@ -65,7 +65,7 @@ class Colloquy
     public function begin(string $identifier): ColloquyContext
     {
         if ($this->driver->exists($identifier)) {
-            throw new ContextAlreadyExistsException;
+            throw new ContextAlreadyExistsException($identifier);
         }
 
         $this->driver->create($identifier);

@@ -25,8 +25,11 @@ class ColloquyAnnotations
 
     public static function endTransaction(object $object)
     {
-        $annotation = AnnotationsParser::getClassAnnotation($object);
-        $contextName = $annotation['ColloquyContext'];
+        $contextName = self::contextNameFromObject($object);
+
+        if (!$contextName) {
+            throw new NoDefinedContextException($object);
+        }
 
         if (!Colloquy::makeSelfFromBinding($contextName)->contextExists($contextName, $object)) {
             return;
