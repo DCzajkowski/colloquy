@@ -22,6 +22,6 @@ trait ColloquyContexts
 
     public function __destruct()
     {
-        ColloquyAnnotations::persist($this);
+        ColloquyAnnotations::endTransaction($this);
     }
 }

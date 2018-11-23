@@ -23,7 +23,7 @@ class ColloquyAnnotations
         }
     }
 
-    public static function persist(object $object)
+    public static function endTransaction(object $object)
     {
         $annotation = AnnotationsParser::getClassAnnotation($object);
         $contextName = $annotation['ColloquyContext'];
