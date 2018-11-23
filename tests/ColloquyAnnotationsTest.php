@@ -8,7 +8,7 @@ use Colloquy\IdentifierResolverInterface;
 use Tests\Fakes\User;
 use Tests\Fakes\TestController;
 
-class AnnotationsTest extends TestCase
+class ColloquyAnnotationsTest extends TestCase
 {
     public function testAllPropertiesAreInjectedProperly()
     {
