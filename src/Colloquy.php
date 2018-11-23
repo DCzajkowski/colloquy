@@ -21,20 +21,20 @@ class Colloquy
     {
         $binding = self::$bindings[$contextName];
 
-        return new ColloquyContext($binding['identifierResolver']->get($object), new self($binding['driver']));
+        return new ColloquyContext(
+            $binding->getIdentifierResolver()->get($object),
+            new self($binding->getDriver())
+        );
     }
 
     public static function bind($contextName, IdentifierResolverInterface $identifierResolver, DriverInterface $driver)
     {
-        self::$bindings[$contextName] = [
-            'identifierResolver' => $identifierResolver,
-            'driver' => $driver,
-        ];
+        self::$bindings[$contextName] = new ColloquyBinding($identifierResolver, $driver);
     }
 
     public static function makeSelfFromBinding(string $contextName)
     {
-        return new self(self::$bindings[$contextName]['driver']);
+        return new self(self::$bindings[$contextName]->getDriver());
     }
 
     public static function doesContextBindingExist(string $contextName): bool
@@ -44,7 +44,7 @@ class Colloquy
 
     public function contextExists(string $contextName, object $object): bool
     {
-        return $this->driver->exists(self::$bindings[$contextName]['identifierResolver']->get($object));
+        return $this->driver->exists(self::$bindings[$contextName]->getIdentifierResolver()->get($object));
     }
 
     public static function createContextFromBinding(string $contextName, object $object)
@@ -54,8 +54,8 @@ class Colloquy
         }
 
         $binding = self::$bindings[$contextName];
-        $colloquy = new self($binding['driver']);
-        $colloquy->begin($binding['identifierResolver']->get($object));
+        $colloquy = new self($binding->getDriver());
+        $colloquy->begin($binding->getIdentifierResolver()->get($object));
     }
 
     public function begin(string $identifier): ColloquyContext
