@@ -4,14 +4,14 @@ namespace Tests;
 
 use Colloquy\Colloquy;
 use Colloquy\ColloquyContext;
-use Tests\Drivers\FakeDriver;
+use Colloquy\Drivers\MemoryDriver;
 use Colloquy\Exceptions\ContextAlreadyExistsException;
 
 class ColloquyTest extends TestCase
 {
     public function testBeginCreatesAContextAndReturnsIt()
     {
-        $wrapper = new Colloquy($driver = new FakeDriver);
+        $wrapper = new Colloquy($driver = new MemoryDriver);
 
         $context = $wrapper->begin($identifier = 'identifier');
 
@@ -25,7 +25,7 @@ class ColloquyTest extends TestCase
     {
         $this->expectException(ContextAlreadyExistsException::class);
 
-        $driver = new FakeDriver;
+        $driver = new MemoryDriver;
         $driver->create($identifier = 'identifier');
 
         $wrapper = new Colloquy($driver);
@@ -35,7 +35,7 @@ class ColloquyTest extends TestCase
 
     public function testContextMethodCreatesANewContextWhenItDoesNotExistAndReturnsIt()
     {
-        $wrapper = new Colloquy($driver = new FakeDriver);
+        $wrapper = new Colloquy($driver = new MemoryDriver);
 
         $context = $wrapper->context($identifier = 'identifier');
 
@@ -47,7 +47,7 @@ class ColloquyTest extends TestCase
 
     public function testContextMethodReturnsAContextIfItExists()
     {
-        $driver = new FakeDriver;
+        $driver = new MemoryDriver;
         $driver->create($identifier = 'identifier');
 
         $wrapper = new Colloquy($driver);
@@ -62,7 +62,7 @@ class ColloquyTest extends TestCase
 
     public function testEndRemovesAContext()
     {
-        $wrapper = new Colloquy($driver = new FakeDriver);
+        $wrapper = new Colloquy($driver = new MemoryDriver);
         $wrapper->begin($identifier = 'identifier');
 
         $this->assertTrue($driver->exists($identifier));
@@ -74,7 +74,7 @@ class ColloquyTest extends TestCase
 
     public function testGetDriverReturnsTheDriver()
     {
-        $wrapper = new Colloquy($driver = new FakeDriver);
+        $wrapper = new Colloquy($driver = new MemoryDriver);
 
         $this->assertEquals($driver, $wrapper->getDriver());
     }
