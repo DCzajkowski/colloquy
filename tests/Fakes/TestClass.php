@@ -33,4 +33,15 @@ class TestClass
      * @type int
      */
     private $wage;
+
+    /** @ColloquyBegin */
+    public function step1()
+    {
+        //
+    }
+
+    public function step2()
+    {
+        //
+    }
 }

@@ -6,6 +6,7 @@ use Colloquy\Support\AnnotationsParser;
 use ReflectionClass;
 use ReflectionException;
 use Tests\Fakes\TestClass;
+use Tests\Fakes\TestController;
 
 class AnnotationsParserTest extends TestCase
 {
@@ -96,5 +97,11 @@ class AnnotationsParserTest extends TestCase
     public function testGetPropertyValueReturnsCorrectValues()
     {
         $this->assertEquals(10, AnnotationsParser::getPropertyValue($this->testClass, 'age'));
+    }
+
+    public function testMethodAnnotationTagExistsReturnsCorrectValues()
+    {
+        $this->assertTrue(AnnotationsParser::methodAnnotationTagExists($this->testClass, 'step1', 'ColloquyBegin'));
+        $this->assertFalse(AnnotationsParser::methodAnnotationTagExists($this->testClass, 'step2', 'ColloquyBegin'));
     }
 }

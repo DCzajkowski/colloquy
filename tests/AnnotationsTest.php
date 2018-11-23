@@ -16,7 +16,7 @@ class AnnotationsTest extends TestCase
             public function get($object): string {
                 return 'session-id';
             }
-        }, $driver = new MemoryDriver);
+        }, new MemoryDriver);
 
         $controller = new TestController;
 

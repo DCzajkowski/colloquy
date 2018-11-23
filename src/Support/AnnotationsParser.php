@@ -11,29 +11,12 @@ class AnnotationsParser
 {
     public static function getClassAnnotation(object $object): array
     {
-        try {
-            return self::parseDocComment((new ReflectionClass($object))->getDocComment());
-        } catch (ReflectionException $e) {
-            return [];
-        }
+        return self::parseDocComment((new ReflectionClass($object))->getDocComment());
     }
 
     public static function getPropertyAnnotation(object $object, string $propertyName): array
     {
-        try {
-            return self::getAnnotationFromReflectionProperty((new ReflectionClass($object))->getProperty($propertyName));
-        } catch (ReflectionException $e) {
-            return [];
-        }
-    }
-
-    protected static function getMethodAnnotation(object $object, string $methodName): array
-    {
-        try {
-            return self::parseDocComment((new ReflectionClass($object))->getMethod($methodName)->getDocComment());
-        } catch (ReflectionException $e) {
-            return [];
-        }
+        return self::getAnnotationFromReflectionProperty((new ReflectionClass($object))->getProperty($propertyName));
     }
 
     public static function methodAnnotationTagExists(object $object, string $methodName, string $tag): bool
@@ -68,11 +51,15 @@ class AnnotationsParser
         }
     }
 
+    protected static function getMethodAnnotation(object $object, string $methodName): array
+    {
+        return self::parseDocComment((new ReflectionClass($object))->getMethod($methodName)->getDocComment());
+    }
+
     protected static function parseDocComment(string $docComment): array
     {
         $raw = str_replace("\r\n", "\n", $docComment);
         $lines = explode("\n", $raw);
-        // $matches = null;
         $tags = [];
 
         $linesCount = count($lines);
@@ -99,10 +86,7 @@ class AnnotationsParser
                 continue;
             }
 
-            if (preg_match('/^@([^\(\n]+)\((\'([^\']+)\'|"([^"]+)"|([^"]+))\)$/', $line, $matches)) {
-                $tagName = $matches[1];
-                $tagValue = trim($matches[3]);
-
+            $setTag = function (string $tagName, string $tagValue, array &$tags) {
                 // If this tag was already parsed, make its value an array
                 if (isset($tags[$tagName])) {
                     if (!is_array($tags[$tagName])) {
@@ -113,22 +97,20 @@ class AnnotationsParser
                 } else {
                     $tags[$tagName] = $tagValue;
                 }
+            };
+
+            if (preg_match('/^@([^\(\n]+)\((\'([^\']+)\'|"([^"]+)"|([^"]+))\)$/', $line, $matches)) {
+                $tagName = $matches[1];
+                $tagValue = trim($matches[3]);
+
+                $setTag($tagName, $tagValue, $tags);
             }
 
             if (preg_match('/@([^ ]+)(.*)/', $line, $matches)) {
                 $tagName = $matches[1];
                 $tagValue = trim($matches[2]);
 
-                // If this tag was already parsed, make its value an array
-                if (isset($tags[$tagName])) {
-                    if (!is_array($tags[$tagName])) {
-                        $tags[$tagName] = [$tags[$tagName]];
-                    }
-
-                    $tags[$tagName][] = $tagValue;
-                } else {
-                    $tags[$tagName] = $tagValue;
-                }
+                $setTag($tagName, $tagValue, $tags);
             }
         }
 
