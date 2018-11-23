@@ -1,10 +1,8 @@
 <?php
 
-namespace Tests\Drivers;
+namespace Colloquy\Drivers;
 
-use Colloquy\Drivers\DriverInterface;
-
-class FakeDriver implements DriverInterface
+class MemoryDriver implements DriverInterface
 {
     private $contexts = [];
 
