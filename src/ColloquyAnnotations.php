@@ -113,28 +113,24 @@ class ColloquyAnnotations
 
     protected static function injectPersistedState(object $object): void
     {
-        try {
-            $context = self::contextFromObject($object);
-            $properties = (new ReflectionClass($object))->getProperties();
+        $context = self::contextFromObject($object);
+        $properties = (new ReflectionClass($object))->getProperties();
 
-            foreach ($properties as $property) {
-                if (AnnotationsParser::propertyAnnotationTagExists(
-                    $object,
+        foreach ($properties as $property) {
+            if (AnnotationsParser::propertyAnnotationTagExists(
+                $object,
+                $property->getName(),
+                ColloquyAnnotations::AnnotationPersist
+            )) {
+                $identifier = self::getIdentifierForProperty(
                     $property->getName(),
-                    ColloquyAnnotations::AnnotationPersist
-                )) {
-                    $identifier = self::getIdentifierForProperty(
-                        $property->getName(),
-                        AnnotationsParser::getAnnotationFromReflectionProperty($property),
-                        $object
-                    );
+                    AnnotationsParser::getAnnotationFromReflectionProperty($property),
+                    $object
+                );
 
-                    $property->setAccessible(true);
-                    $property->setValue($object, $context->get($identifier));
-                }
+                $property->setAccessible(true);
+                $property->setValue($object, $context->get($identifier));
             }
-        } catch (ReflectionException $e) {
-            //
         }
     }
 }
