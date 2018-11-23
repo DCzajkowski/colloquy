@@ -16,11 +16,15 @@ class ColloquyAnnotations
     {
         if (AnnotationsParser::methodAnnotationTagExists($object, $method, ColloquyAnnotations::AnnotationBegin)) {
             self::createContextFromObject($object);
-        } elseif (AnnotationsParser::methodAnnotationTagExists($object, $method, ColloquyAnnotations::AnnotationEnd)) {
-            self::contextFromObject($object)->end();
-        } else {
-            self::injectPersistedState($object);
+
+            return;
         }
+
+        if (AnnotationsParser::methodAnnotationTagExists($object, $method, ColloquyAnnotations::AnnotationEnd)) {
+            Colloquy::addContextToBeRemoved(self::contextFromObject($object));
+        }
+
+        self::injectPersistedState($object);
     }
 
     public static function endTransaction(object $object)
@@ -36,6 +40,12 @@ class ColloquyAnnotations
         }
 
         $context = self::contextFromObject($object);
+
+        if (Colloquy::shouldBeRemoved($context)) {
+            Colloquy::removeContext($context);
+
+            return;
+        }
 
         foreach (self::getProperties($object) as $propertyName => $propertyAnnotationTags) {
             if (AnnotationsParser::propertyAnnotationTagExists(

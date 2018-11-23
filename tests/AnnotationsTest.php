@@ -16,7 +16,7 @@ class AnnotationsTest extends TestCase
             public function get($object): string {
                 return 'session-id';
             }
-        }, new MemoryDriver);
+        }, $driver = new MemoryDriver);
 
         $controller = new TestController;
 
@@ -24,18 +24,31 @@ class AnnotationsTest extends TestCase
 
         $response = $controller->step1();
 
+        $this->assertTrue($driver->exists('session-id'));
         $this->assertEquals('step1', $response);
         $this->assertInstanceOf(User::class, $controller->user);
         $this->assertEquals('John', $controller->user->getName());
 
+        $controller = new TestController;
+
+        $this->assertNull($controller->user);
+
+        $controller->step2();
+
+        $this->assertInstanceOf(User::class, $controller->user);
+        $this->assertEquals('John', $controller->user->getName());
+        $this->assertEquals(21, $controller->user->getAge());
+
+        $controller = new TestController;
+
+        $user = $controller->step3();
+
+        $this->assertInstanceOf(User::class, $user);
+        $this->assertEquals('John', $user->getName());
+        $this->assertEquals(21, $user->getAge());
+
         $controller->__destruct();
-        $freshController = new TestController;
 
-        $this->assertNull($freshController->user);
-
-        $freshController->step2();
-
-        $this->assertInstanceOf(User::class, $freshController->user);
-        $this->assertEquals(21, $freshController->user->getAge());
+        $this->assertFalse($driver->exists('session-id'));
     }
 }

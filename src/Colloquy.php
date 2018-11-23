@@ -16,6 +16,9 @@ class Colloquy
     /** @type DriverInterface */
     protected $driver;
 
+    /** @type string[] */
+    protected static $contextsToBeRemoved = [];
+
     public function __construct(DriverInterface $driver)
     {
         $this->driver = $driver;
@@ -44,6 +47,16 @@ class Colloquy
     public static function doesContextBindingExist(string $contextName): bool
     {
         return array_key_exists($contextName, self::$bindings);
+    }
+
+    public static function addContextToBeRemoved(ColloquyContext $context): void
+    {
+        array_push(static::$contextsToBeRemoved, $context->getIdentifier());
+    }
+
+    public static function shouldBeRemoved(ColloquyContext $context): bool
+    {
+        return in_array($context->getIdentifier(), self::$contextsToBeRemoved);
     }
 
     public function contextExists(string $contextName, object $object): bool
@@ -80,6 +93,13 @@ class Colloquy
         }
 
         return new ColloquyContext($identifier, $this);
+    }
+
+    public static function removeContext(ColloquyContext $context): void
+    {
+        $context->end();
+
+        unset(self::$contextsToBeRemoved[$context->getIdentifier()]);
     }
 
     public function end(string $identifier): void
