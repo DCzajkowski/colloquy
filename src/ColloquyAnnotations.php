@@ -8,19 +8,19 @@ use Colloquy\Support\AnnotationsParser;
 
 class ColloquyAnnotations
 {
-    protected const AnnotationPersist = 'ColloquyPersist';
-    protected const AnnotationBegin = 'ColloquyBegin';
-    protected const AnnotationEnd = 'ColloquyEnd';
+    protected const ANNOTATION_PERSIST = 'ColloquyPersist';
+    protected const ANNOTATION_BEGIN = 'ColloquyBegin';
+    protected const ANNOTATION_END = 'ColloquyEnd';
 
     public static function handle(object $object, $method)
     {
-        if (AnnotationsParser::methodAnnotationTagExists($object, $method, ColloquyAnnotations::AnnotationBegin)) {
+        if (AnnotationsParser::methodAnnotationTagExists($object, $method, self::ANNOTATION_BEGIN)) {
             self::createContextFromObject($object);
 
             return;
         }
 
-        if (AnnotationsParser::methodAnnotationTagExists($object, $method, ColloquyAnnotations::AnnotationEnd)) {
+        if (AnnotationsParser::methodAnnotationTagExists($object, $method, self::ANNOTATION_END)) {
             Colloquy::addContextToBeRemoved(self::contextFromObject($object));
         }
 
@@ -51,7 +51,7 @@ class ColloquyAnnotations
             if (AnnotationsParser::propertyAnnotationTagExists(
                 $object,
                 $propertyName,
-                ColloquyAnnotations::AnnotationPersist
+                self::ANNOTATION_PERSIST
             )) {
                 $identifier = self::getIdentifierForProperty($propertyName, $propertyAnnotationTags, $object);
 
@@ -62,7 +62,7 @@ class ColloquyAnnotations
 
     protected static function getIdentifierForProperty(string $propertyName, array $propertyAnnotationTags, object $object): string
     {
-        $identifier = $propertyAnnotationTags[ColloquyAnnotations::AnnotationPersist];
+        $identifier = $propertyAnnotationTags[self::ANNOTATION_PERSIST];
 
         if ($identifier) {
             return $identifier;
@@ -120,7 +120,7 @@ class ColloquyAnnotations
             if (AnnotationsParser::propertyAnnotationTagExists(
                 $object,
                 $property->getName(),
-                ColloquyAnnotations::AnnotationPersist
+                self::ANNOTATION_PERSIST
             )) {
                 $identifier = self::getIdentifierForProperty(
                     $property->getName(),
