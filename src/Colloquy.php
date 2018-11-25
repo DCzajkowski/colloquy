@@ -34,12 +34,12 @@ class Colloquy
         );
     }
 
-    public static function bind($contextName, IdentifierResolverInterface $identifierResolver, DriverInterface $driver)
+    public static function bind(string $contextName, IdentifierResolverInterface $identifierResolver, DriverInterface $driver): void
     {
         self::$bindings[$contextName] = new ColloquyBinding($identifierResolver, $driver);
     }
 
-    public static function makeSelfFromBinding(string $contextName)
+    public static function makeSelfFromBinding(string $contextName): self
     {
         return new self(self::$bindings[$contextName]->getDriver());
     }
@@ -64,7 +64,7 @@ class Colloquy
         return $this->driver->exists(self::$bindings[$contextName]->getIdentifierResolver()->get($object));
     }
 
-    public static function createContextFromBinding(string $contextName, object $object)
+    public static function createContextFromBinding(string $contextName, object $object): void
     {
         if (!Colloquy::doesContextBindingExist($contextName)) {
             throw new UserDefinedContextNotFoundException($contextName);

@@ -29,7 +29,7 @@ class AnnotationsParser
         return array_key_exists($tag, self::getPropertyAnnotation($object, $propertyName));
     }
 
-    public static function propertyAnnotationTagValue($object, $propertyName, $tag): string
+    public static function propertyAnnotationTagValue(object $object, string $propertyName, string $tag): string
     {
         return self::getPropertyAnnotation($object, $propertyName)[$tag];
     }

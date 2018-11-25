@@ -12,7 +12,7 @@ class ColloquyAnnotations
     protected const ANNOTATION_BEGIN = 'ColloquyBegin';
     protected const ANNOTATION_END = 'ColloquyEnd';
 
-    public static function handle(object $object, $method)
+    public static function handle(object $object, string $method): void
     {
         if (AnnotationsParser::methodAnnotationTagExists($object, $method, self::ANNOTATION_BEGIN)) {
             self::createContextFromObject($object);
@@ -27,7 +27,7 @@ class ColloquyAnnotations
         self::injectPersistedState($object);
     }
 
-    public static function endTransaction(object $object)
+    public static function endTransaction(object $object): void
     {
         $contextName = self::contextNameFromObject($object);
 
