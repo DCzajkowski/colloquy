@@ -11,8 +11,7 @@ class ColloquyBindingTest extends TestCase
     public function testBothGettersWorkAsExpected()
     {
         $identifierResolver = new class implements IdentifierResolverInterface {
-            public function get($object): string
-            {
+            public function get($object): string {
                 return 'sample-string-identifier';
             }
         };
