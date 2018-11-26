@@ -10,7 +10,7 @@ class AnnotationsParser
 {
     public static function getClassAnnotation(object $object): array
     {
-        return self::parseDocComment((new ReflectionClass($object))->getDocComment());
+        return self::parseDocComment((string) (new ReflectionClass($object))->getDocComment());
     }
 
     public static function getPropertyAnnotation(object $object, string $propertyName): array
@@ -35,7 +35,7 @@ class AnnotationsParser
 
     public static function getAnnotationFromReflectionProperty(ReflectionProperty $property): array
     {
-        return self::parseDocComment($property->getDocComment());
+        return self::parseDocComment((string) $property->getDocComment());
     }
 
     public static function getPropertyValue(object $object, string $property)
@@ -48,7 +48,7 @@ class AnnotationsParser
 
     protected static function getMethodAnnotation(object $object, string $methodName): array
     {
-        return self::parseDocComment((new ReflectionClass($object))->getMethod($methodName)->getDocComment());
+        return self::parseDocComment((string) (new ReflectionClass($object))->getMethod($methodName)->getDocComment());
     }
 
     protected static function parseDocComment(string $docComment): array
