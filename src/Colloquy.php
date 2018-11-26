@@ -24,7 +24,7 @@ class Colloquy
         $this->driver = $driver;
     }
 
-    public static function getBoundContext(string $contextName, \object $object): ColloquyContext
+    public static function getBoundContext(string $contextName, $object): ColloquyContext
     {
         $binding = self::$bindings[$contextName];
 
@@ -59,12 +59,12 @@ class Colloquy
         return in_array($context->getIdentifier(), self::$contextsToBeRemoved);
     }
 
-    public function contextExists(string $contextName, \object $object): bool
+    public function contextExists(string $contextName, $object): bool
     {
         return $this->driver->exists(self::$bindings[$contextName]->getIdentifierResolver()->get($object));
     }
 
-    public static function createContextFromBinding(string $contextName, \object $object): void
+    public static function createContextFromBinding(string $contextName, $object): void
     {
         if (!Colloquy::doesContextBindingExist($contextName)) {
             throw new UserDefinedContextNotFoundException($contextName);

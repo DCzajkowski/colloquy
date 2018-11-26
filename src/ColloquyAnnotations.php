@@ -12,7 +12,7 @@ class ColloquyAnnotations
     protected const ANNOTATION_BEGIN = 'ColloquyBegin';
     protected const ANNOTATION_END = 'ColloquyEnd';
 
-    public static function handle(\object $object, string $method): void
+    public static function handle($object, string $method): void
     {
         if (AnnotationsParser::methodAnnotationTagExists($object, $method, self::ANNOTATION_BEGIN)) {
             self::createContextFromObject($object);
@@ -27,7 +27,7 @@ class ColloquyAnnotations
         self::injectPersistedState($object);
     }
 
-    public static function endTransaction(\object $object): void
+    public static function endTransaction($object): void
     {
         $contextName = self::contextNameFromObject($object);
 
@@ -56,7 +56,7 @@ class ColloquyAnnotations
         }
     }
 
-    protected static function getIdentifierForProperty(string $propertyName, array $propertyAnnotationTags, \object $object): string
+    protected static function getIdentifierForProperty(string $propertyName, array $propertyAnnotationTags, $object): string
     {
         $identifier = $propertyAnnotationTags[self::ANNOTATION_PERSIST];
 
@@ -71,7 +71,7 @@ class ColloquyAnnotations
         ]);
     }
 
-    protected static function getProperties(\object $object): array
+    protected static function getProperties($object): array
     {
         $result = [];
         $properties = (new ReflectionClass($object))->getProperties();
@@ -83,7 +83,7 @@ class ColloquyAnnotations
         return $result;
     }
 
-    protected static function contextNameFromObject(\object $object): string
+    protected static function contextNameFromObject($object): string
     {
         $annotation = AnnotationsParser::getClassAnnotation($object);
 
@@ -94,19 +94,19 @@ class ColloquyAnnotations
         return $annotation['ColloquyContext'];
     }
 
-    protected static function contextFromObject(\object $object): ColloquyContext
+    protected static function contextFromObject($object): ColloquyContext
     {
         return Colloquy::getBoundContext(self::contextNameFromObject($object), $object);
     }
 
-    protected static function createContextFromObject(\object $object): void
+    protected static function createContextFromObject($object): void
     {
         $contextName = self::contextNameFromObject($object);
 
         Colloquy::createContextFromBinding($contextName, $object);
     }
 
-    protected static function injectPersistedState(\object $object): void
+    protected static function injectPersistedState($object): void
     {
         $context = self::contextFromObject($object);
         $properties = (new ReflectionClass($object))->getProperties();
