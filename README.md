@@ -1,4 +1,4 @@
-# ⚠️ WIP ⚠️ - Colloquy
+# Colloquy
 A framework-agnostic package for managing persistent conversation contexts.
 
 # Installation
@@ -7,6 +7,68 @@ composer install dczajkowski/colloquy
 ```
 
 # Usage
+
+## Using in auto-mode with annotations
+**Identifier resolver declaration**
+```php
+<?php
+
+namespace App;
+
+class SessionIdentifierResolver implements \Colloquy\IdentifierResolverInterface
+{
+    public function get($controller): string
+    {
+        return // code to get session id 
+    }
+}
+```
+
+**Context binding**
+```php
+<?php
+
+\Colloquy\Colloquy::bind(
+    'session',
+    new \App\SessionIdentifierResolver,
+    new \Colloquy\Drivers\FileDriver($pathToWritableDirectory)
+);
+```
+
+**Use in a controller**
+```php
+<?php
+
+namespace App\Http\Controllers;
+
+/** @ColloquyContext('session') */
+class FormController
+{
+    use \Colloquy\ColloquyContexts;
+    
+    /** @ColloquyPersist */
+    protected $user;
+
+    /** @ColloquyBegin */
+    private function step1()
+    {
+        $this->user = new \App\Models\User;
+    }
+
+    public function step2()
+    {
+        $this->user->name = 'John';
+    }
+
+    /** @ColloquyEnd */
+    private function step3()
+    {
+        echo $this->user->name; // John
+    }
+}
+```
+
+## Manual Use
 
 ```php
 <?php
@@ -42,7 +104,7 @@ $homeContext->set('John', 'name');
 
 $name = $homeContext->get('name'); // John
 
-/** User-defined classes */
+/** Objects */
 
 $user = new User('Jack');
 
@@ -64,7 +126,7 @@ $wrapper->end('Home');
 Contributions are very welcome. If you want, just drop a PR with any feature you'd like to see.
 
 # Authors
-The app was made by Dariusz Czajkowski, Grzegorz Tłuszcz, Aleksander Kuźma, Karol Piwnicki.
+The library was made by [Dariusz Czajkowski](https://dczajkowski.com), Grzegorz Tłuszcz, Aleksander Kuźma, Karol Piwnicki.
 
 # License
 The Colloquy package is open-sourced software licensed under the MIT license.
