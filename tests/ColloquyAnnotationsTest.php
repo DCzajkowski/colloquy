@@ -2,11 +2,14 @@
 
 namespace Tests;
 
+use Tests\Fakes\User;
 use Colloquy\Colloquy;
+use Tests\Fakes\TestController;
 use Colloquy\Drivers\MemoryDriver;
 use Colloquy\IdentifierResolverInterface;
-use Tests\Fakes\User;
-use Tests\Fakes\TestController;
+use Colloquy\Exceptions\ContextNotDefinedException;
+use Tests\Fakes\TestControllerWithoutContextDeclaration;
+use Tests\Fakes\TestControllerWithInvalidContextDeclaration;
 
 class ColloquyAnnotationsTest extends TestCase
 {
@@ -31,6 +34,8 @@ class ColloquyAnnotationsTest extends TestCase
 
         $controller = new TestController;
 
+        $this->assertEquals([], $driver->get('session-id', 'custom-identifier-form'));
+
         $this->assertNull($controller->user);
 
         $controller->step2();
@@ -50,5 +55,31 @@ class ColloquyAnnotationsTest extends TestCase
         $controller->__destruct();
 
         $this->assertFalse($driver->exists('session-id'));
+    }
+
+    public function testExceptionIsThrownWhenThereIsNoColloquyContextAnnotation()
+    {
+        $this->expectException(ContextNotDefinedException::class);
+
+        $controller = new TestControllerWithoutContextDeclaration;
+
+        try {
+            $controller->step1();
+        } catch (ContextNotDefinedException $e) {
+            //
+        }
+    }
+
+    public function testExceptionIsThrownWhenThereIsNoColloquyContextBinding()
+    {
+        $this->expectException(ContextNotDefinedException::class);
+
+        $controller = new TestControllerWithInvalidContextDeclaration;
+
+        try {
+            $controller->step1();
+        } catch (ContextNotDefinedException $e) {
+            //
+        }
     }
 }

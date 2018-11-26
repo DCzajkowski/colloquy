@@ -7,7 +7,7 @@ use Colloquy\Drivers\ConsoleDriver;
 
 class ConsoleDriverTest extends TestCase
 {
-    /** @var \Colloquy\Drivers\ConsoleDriver */
+    /** @type \Colloquy\Drivers\ConsoleDriver */
     private $driver;
 
     public function setUp()

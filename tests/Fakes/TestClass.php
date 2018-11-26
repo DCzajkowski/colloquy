@@ -34,6 +34,10 @@ class TestClass
      */
     private $wage;
 
+    /** @type string Malformed doc-block
+     */
+    private $prop;
+
     /** @ColloquyBegin */
     public function step1()
     {

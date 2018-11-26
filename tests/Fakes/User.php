@@ -7,6 +7,15 @@ class User
     private $name;
     private $age;
 
+    public static function create(string $name, int $age): self
+    {
+        $user = new self;
+        $user->setName($name);
+        $user->setAge($age);
+
+        return $user;
+    }
+
     public function setName(string $name): void
     {
         $this->name = $name;

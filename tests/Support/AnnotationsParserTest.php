@@ -2,11 +2,11 @@
 
 namespace Tests;
 
-use Colloquy\Support\AnnotationsParser;
 use ReflectionClass;
 use ReflectionException;
 use Tests\Fakes\TestClass;
-use Tests\Fakes\TestController;
+use Colloquy\Support\AnnotationsParser;
+use Colloquy\Exceptions\MalformedDocBlockException;
 
 class AnnotationsParserTest extends TestCase
 {
@@ -49,6 +49,13 @@ class AnnotationsParserTest extends TestCase
             'ColloquyPersist' => '',
             'type' => 'int',
         ], AnnotationsParser::getPropertyAnnotation($this->testClass, 'wage'));
+    }
+
+    public function testParserThrowsOnMalformedDocBlock()
+    {
+        $this->expectException(MalformedDocBlockException::class);
+
+        AnnotationsParser::getPropertyAnnotation($this->testClass, 'prop');
     }
 
     public function testPropertyAnnotationTagExistsReturnsCorrectValues()

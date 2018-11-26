@@ -6,6 +6,7 @@ use Colloquy\Colloquy;
 use Colloquy\ColloquyContext;
 use Colloquy\Drivers\MemoryDriver;
 use Colloquy\Exceptions\ContextAlreadyExistsException;
+use Colloquy\Exceptions\UserDefinedContextNotFoundException;
 
 class ColloquyTest extends TestCase
 {
@@ -77,5 +78,12 @@ class ColloquyTest extends TestCase
         $wrapper = new Colloquy($driver = new MemoryDriver);
 
         $this->assertEquals($driver, $wrapper->getDriver());
+    }
+
+    public function testThrowsAnExceptionWhenContextBindingDoesNotExist()
+    {
+        $this->expectException(UserDefinedContextNotFoundException::class);
+
+        Colloquy::createContextFromBinding('non-existent-context', new class {});
     }
 }

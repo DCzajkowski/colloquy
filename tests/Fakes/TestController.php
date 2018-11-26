@@ -15,11 +15,18 @@ class TestController
      */
     public $user;
 
+    /**
+     * @ColloquyPersist('custom-identifier-form')
+     */
+    public $form;
+
     /** @ColloquyBegin */
     private function step1()
     {
         $this->user = new User;
         $this->user->setName('John');
+
+        $this->form = [];
 
         return 'step1';
     }
@@ -27,6 +34,7 @@ class TestController
     private function step2()
     {
         $this->user->setAge(21);
+        $this->form['name'] = 'Jack';
 
         return 'step2';
     }
