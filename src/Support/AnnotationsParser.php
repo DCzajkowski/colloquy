@@ -81,31 +81,18 @@ class AnnotationsParser
                 continue;
             }
 
-            $setTag = function (string $tagName, string $tagValue, array &$tags) {
-                // If this tag was already parsed, make its value an array
-                if (isset($tags[$tagName])) {
-                    if (!is_array($tags[$tagName])) {
-                        $tags[$tagName] = [$tags[$tagName]];
-                    }
-
-                    $tags[$tagName][] = $tagValue;
-                } else {
-                    $tags[$tagName] = $tagValue;
-                }
-            };
-
             if (preg_match('/^@([^\(\n]+)\((\'([^\']+)\'|"([^"]+)"|([^"]+))\)$/', $line, $matches)) {
                 $tagName = $matches[1];
                 $tagValue = trim($matches[3]);
 
-                $setTag($tagName, $tagValue, $tags);
+                $tags[$tagName] = $tagValue;
             }
 
             if (preg_match('/@([^ ]+)(.*)/', $line, $matches)) {
                 $tagName = $matches[1];
                 $tagValue = trim($matches[2]);
 
-                $setTag($tagName, $tagValue, $tags);
+                $tags[$tagName] = $tagValue;
             }
         }
 
