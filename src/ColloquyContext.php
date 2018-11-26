@@ -2,7 +2,7 @@
 
 namespace Colloquy;
 
-use Colloquy\Exceptions\NoKeyProvidedException;
+use Colloquy\Exceptions\KeyNotProvidedException;
 
 class ColloquyContext
 {
@@ -23,7 +23,7 @@ class ColloquyContext
         if ($key === null && is_object($data)) {
             $key = get_class($data);
         } else if ($key === null) {
-            throw new NoKeyProvidedException;
+            throw new KeyNotProvidedException;
         }
 
         $this->wrapper->getDriver()->set($this->identifier, $key, $data);

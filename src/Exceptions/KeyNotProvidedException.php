@@ -4,7 +4,7 @@ namespace Colloquy\Exceptions;
 
 use RuntimeException;
 
-class NoKeyProvidedException extends RuntimeException
+class KeyNotProvidedException extends RuntimeException
 {
     public function __construct()
     {

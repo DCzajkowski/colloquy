@@ -3,8 +3,8 @@
 namespace Colloquy;
 
 use ReflectionClass;
-use ReflectionException;
 use Colloquy\Support\AnnotationsParser;
+use Colloquy\Exceptions\ContextNotDefinedException;
 
 class ColloquyAnnotations
 {
@@ -30,10 +30,6 @@ class ColloquyAnnotations
     public static function endTransaction(object $object): void
     {
         $contextName = self::contextNameFromObject($object);
-
-        if (!$contextName) {
-            throw new NoDefinedContextException($object);
-        }
 
         if (!Colloquy::makeSelfFromBinding($contextName)->contextExists($contextName, $object)) {
             return;
@@ -78,12 +74,7 @@ class ColloquyAnnotations
     protected static function getProperties(object $object): array
     {
         $result = [];
-
-        try {
-            $properties = (new ReflectionClass($object))->getProperties();
-        } catch (ReflectionException $e) {
-            return [];
-        }
+        $properties = (new ReflectionClass($object))->getProperties();
 
         foreach ($properties as $property) {
             $result[$property->getName()] = AnnotationsParser::getAnnotationFromReflectionProperty($property);
@@ -95,6 +86,10 @@ class ColloquyAnnotations
     protected static function contextNameFromObject(object $object): string
     {
         $annotation = AnnotationsParser::getClassAnnotation($object);
+
+        if (!key_exists('ColloquyContext', $annotation) || empty($annotation['ColloquyContext'])) {
+            throw new ContextNotDefinedException($object);
+        }
 
         return $annotation['ColloquyContext'];
     }

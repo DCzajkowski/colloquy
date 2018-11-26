@@ -1,10 +1,10 @@
 <?php
 
-namespace Colloquy;
+namespace Colloquy\Exceptions;
 
 use RuntimeException;
 
-class NoDefinedContextException extends RuntimeException
+class ContextNotDefinedException extends RuntimeException
 {
     public function __construct(object $object) {
         parent::__construct(sprintf(

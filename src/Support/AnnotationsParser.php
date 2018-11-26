@@ -4,7 +4,6 @@ namespace Colloquy\Support;
 
 use ReflectionClass;
 use ReflectionProperty;
-use ReflectionException;
 use Colloquy\Exceptions\MalformedDocBlockException;
 
 class AnnotationsParser
@@ -41,14 +40,10 @@ class AnnotationsParser
 
     public static function getPropertyValue(object $object, string $property)
     {
-        try {
-            $property = (new ReflectionClass($object))->getProperty($property);
-            $property->setAccessible(true);
+        $property = (new ReflectionClass($object))->getProperty($property);
+        $property->setAccessible(true);
 
-            return $property->getValue($object);
-        } catch (ReflectionException $e) {
-            return [];
-        }
+        return $property->getValue($object);
     }
 
     protected static function getMethodAnnotation(object $object, string $methodName): array
