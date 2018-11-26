@@ -61,7 +61,7 @@ class FormController
         $this->user = new \App\Models\User;
     }
 
-    public function step2()
+    private function step2()
     {
         $this->user->name = 'John';
     }
@@ -86,7 +86,8 @@ class User
 {
    private $name;
    
-   public function __construct(string $name) {
+   public function __construct(string $name)
+   {
        $this->name = $name;
    }
 }
