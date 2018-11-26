@@ -1,4 +1,10 @@
 # Colloquy
+[![Latest Stable Version](https://poser.pugx.org/dczajkowski/colloquy/version)](https://packagist.org/packages/dczajkowski/colloquy)
+[![License](https://poser.pugx.org/dczajkowski/colloquy/license)](https://packagist.org/packages/dczajkowski/colloquy)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DCzajkowski/colloquy/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DCzajkowski/colloquy/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/DCzajkowski/colloquy/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/DCzajkowski/colloquy/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/DCzajkowski/colloquy/badges/build.png?b=master)](https://scrutinizer-ci.com/g/DCzajkowski/colloquy/build-status/master)
+
 A framework-agnostic package for managing persistent conversation contexts.
 
 # Installation
