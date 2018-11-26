@@ -4,6 +4,7 @@ namespace Tests;
 
 use Tests\Fakes\User;
 use Colloquy\Colloquy;
+use BadMethodCallException;
 use Tests\Fakes\TestController;
 use Colloquy\Drivers\MemoryDriver;
 use Colloquy\IdentifierResolverInterface;
@@ -81,5 +82,20 @@ class ColloquyAnnotationsTest extends TestCase
         } catch (ContextNotDefinedException $e) {
             //
         }
+    }
+
+    public function testExceptionIsThrownWhenANonExistentMethodIsCalled()
+    {
+        Colloquy::bind('session', new class implements IdentifierResolverInterface {
+            public function get($object): string {
+                return 'session-id';
+            }
+        }, new MemoryDriver);
+
+        $this->expectException(BadMethodCallException::class);
+
+        $controller = new TestController;
+
+        $controller->nonExistentMethod();
     }
 }
