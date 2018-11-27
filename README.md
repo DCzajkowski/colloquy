@@ -1,11 +1,14 @@
-# Colloquy
-[![Latest Stable Version](https://poser.pugx.org/dczajkowski/colloquy/version)](https://packagist.org/packages/dczajkowski/colloquy)
-[![License](https://poser.pugx.org/dczajkowski/colloquy/license)](https://packagist.org/packages/dczajkowski/colloquy)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DCzajkowski/colloquy/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DCzajkowski/colloquy/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/DCzajkowski/colloquy/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/DCzajkowski/colloquy/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/DCzajkowski/colloquy/badges/build.png?b=master)](https://scrutinizer-ci.com/g/DCzajkowski/colloquy/build-status/master)
+<p align="center"><img width="256" src="https://colloquy.netlify.com/assets/img/logo-text.svg"></p>
 
-A framework-agnostic package for managing persistent conversation contexts.
+<p align="center">A framework-agnostic package for managing persistent conversation contexts.</p>
+
+<p align="center">
+    <a href="https://packagist.org/packages/dczajkowski/colloquy"><img alt="Latest Stable Version" src="https://poser.pugx.org/dczajkowski/colloquy/version"></a>
+    <a href="https://github.com/DCzajkowski/colloquy/blob/master/LICENSE.md"><img alt="License" src="https://poser.pugx.org/dczajkowski/colloquy/license"></a>
+    <a href="https://scrutinizer-ci.com/g/DCzajkowski/colloquy/?branch=master"><img alt="Scrutinizer Code Quality" src="https://scrutinizer-ci.com/g/DCzajkowski/colloquy/badges/quality-score.png?b=master"></a>
+    <a href="https://scrutinizer-ci.com/g/DCzajkowski/colloquy/?branch=master"><img alt="Code Coverage" src="https://scrutinizer-ci.com/g/DCzajkowski/colloquy/badges/coverage.png?b=master"></a>
+    <a href="https://scrutinizer-ci.com/g/DCzajkowski/colloquy/build-status/master"><img alt="Build Status" src="https://scrutinizer-ci.com/g/DCzajkowski/colloquy/badges/build.png?b=master"></a>
+</p>
 
 # Installation
 ```bash
