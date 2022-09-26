@@ -10,7 +10,8 @@ class ColloquyAnnotations
 {
     protected const ANNOTATION_PERSIST = 'ColloquyPersist';
     protected const ANNOTATION_BEGIN = 'ColloquyBegin';
-    protected const ANNOTATION_END = 'ColloquyEnd';
+        protected const ANNOTATION_END = 'ColloquyEnd'
+            ;
 
     public static function handle($object, string $method): void
     {
